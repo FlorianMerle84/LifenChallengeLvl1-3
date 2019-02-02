@@ -1,26 +1,29 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import "antd/dist/antd.css";
+import WrappedDragger from './components/Dragger.js';
+
 
 class App extends Component {
+
+
   render() {
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+    <div id="body">
+      <div id="header">
+        <h1 id="title">Files droper</h1>
       </div>
+
+      <div className="content">
+        <WrappedDragger />
+      </div>
+
+      <div id="footer">
+        <h2 id="signature">Florian Merle</h2>
+      </div>
+    </div>
     );
   }
 }
