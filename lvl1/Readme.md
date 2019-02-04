@@ -13,7 +13,7 @@ There are 5 levels:
 * Lvl 4: integrate with a framework for desktop applications (Electron, node-webkit, etc...)
 * Lvl 5: watch a directory on your machine. Any files dropped to this directory should be uploaded.
 
-### General guidelines
+### General guidelines 
 
 * You can use any framework you like.
 * The app should look ok. It should be usable (have a decent UX and UI).

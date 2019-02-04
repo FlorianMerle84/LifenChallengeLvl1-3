@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { Upload, Icon, message, Select, Form, Button } from 'antd';
 
-
 const { Option } = Select;
-
-
 
 class Dragger extends React.Component {
 
@@ -18,13 +15,13 @@ class Dragger extends React.Component {
     return e && e.fileList;
   }
 
-
   render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
     };
+
     return (
       <Form >
 
@@ -37,7 +34,7 @@ class Dragger extends React.Component {
               valuePropName: 'fileList',
               getValueFromEvent: this.normFile,
             })(
-              <Upload.Dragger name="files" action="https://jsonplaceholder.typicode.com/todos/1">
+              <Upload.Dragger name="files" action="https://fhirtest.uhn.ca/baseDstu3/Binary">
                 <p className="ant-upload-drag-icon">
                   <Icon type="inbox" />
                 </p>
@@ -47,7 +44,6 @@ class Dragger extends React.Component {
             )}
           </div>
         </Form.Item>
-
 
       </Form>
     );
