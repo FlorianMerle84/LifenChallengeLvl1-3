@@ -3,7 +3,6 @@ import './App.css';
 import "antd/dist/antd.css";
 import WrappedDragger from './components/Dragger.js';
 
-
 class App extends Component {
 
   render() {
@@ -14,7 +13,7 @@ class App extends Component {
         <h1 id="title">Files droper</h1>
       </div>
 
-      <div className="content">
+      <div id="content">
         <WrappedDragger />
       </div>
 
