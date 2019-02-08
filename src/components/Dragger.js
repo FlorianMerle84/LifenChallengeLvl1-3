@@ -1,6 +1,13 @@
 import React from 'react';
-import { Upload, Icon, Form, Progress, Spin } from 'antd';
+import { Upload, Icon, Form, Progress, Spin, notification, Alert } from 'antd';
 
+const openNotification = (fileName) => {
+notification.open({
+  message: 'Upload successful',
+  description: `${fileName} has been uploaded successfuly`,
+  icon: <Icon type="check-circle" style={{ color: '#399E5A' }} />,
+});
+};
 
 class Dragger extends React.Component {
   constructor(props) {
@@ -10,41 +17,39 @@ class Dragger extends React.Component {
     totalBinary: null,
     loading: false
   };
-
 }
 
   normFile = (e) => {
+    this.setState({
+      loading: false,
+      totalBinary: null
+    })
     console.log('Upload event:', e);
-    console.log('file ?', e.file.response);
     if (e.file.status === "done") {
+      openNotification(e.file.name);
       var ctx = this;
       this.setState({
         loading: true
       })
-      fetch('http://hapi.fhir.org/baseDstu3/Binary?_pretty=true&_count=550')
+
+      fetch(' http://hapi.fhir.org/baseDstu3/Binary?_summary=count')
         .then(function(response) {
           console.log('response', response);
           return response.json();
         })
         .then(function(data) {
-          console.log('Data', data.entry);
+          console.log('Data', data.total);
           let binaryCount = 0;
-          for (var i = 0; i < data.entry.length; i++) {
-            if(data.entry[i].resource.resourceType) {
-              binaryCount++;
-            }
-          }
+
           ctx.setState({
             loading: false,
-            totalBinary: binaryCount
+            totalBinary: data.total
           })
         })
         .catch(function(error) {
           console.log('Request failed', error)
         });
-
     }
-
     if (Array.isArray(e)) {
       return e;
     }
@@ -58,26 +63,28 @@ class Dragger extends React.Component {
       wrapperCol: { span: 24 },
     };
 
-    console.log('stateBinary', this.state.totalBinary);
+    let resultMessage = `There are ${this.state.totalBinary} Binary on the server`;
+    const binaryInServer =  this.state.totalBinary
+      ?
+      <Alert
+        message={resultMessage}
+        type="success"
+        closable
+      />
+      :null
 
-  const progress =  this.state.totalBinary
-    ?  <div id="results">
-        <p>Space available on server</p>
-        <Progress percent={100 - (this.state.totalBinary / 5)}  />
-        <p>There are {this.state.totalBinary} binary on 500 slots available</p>
-      </div>
-    :null
-
-  const spinner = this.state.loading
-    ? <div>
-        <Spin size="large" />
-      </div>
-    :null
+    const spinner = this.state.loading
+      ? <div id="spinner">
+          <p>Please wait for server response about available space</p>
+          <Spin size="large" />
+        </div>
+      :null
 
     return (
-      <div id="dragger">
-        <Form >
 
+      <div id="dragger">
+
+        <Form >
           <Form.Item
             {...formItemLayout}
             id="dropZone"
@@ -97,13 +104,13 @@ class Dragger extends React.Component {
               )}
             </div>
           </Form.Item>
-
         </Form>
 
         <div>
             {spinner}
-            {progress}
+            {binaryInServer}
         </div>
+        
       </div>
     );
   }

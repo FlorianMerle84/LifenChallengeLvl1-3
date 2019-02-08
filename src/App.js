@@ -9,6 +9,7 @@ class App extends Component {
 
     return (
     <div id="body">
+
       <div id="header">
         <h1 id="title">Files droper</h1>
       </div>
@@ -18,8 +19,9 @@ class App extends Component {
       </div>
 
       <div id="footer">
-        <h2 id="signature">Florian Merle</h2>
+        <h2 id="signature">Florian Merle for Lifen</h2>
       </div>
+
     </div>
     );
   }
